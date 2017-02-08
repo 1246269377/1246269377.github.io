@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>服务器首页</title>
+		<link rel="stylesheet" type="text/css" href="css/theAll.css" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<script src="ajax.js"></script>
+	</head>
+
+	<body>
+		<!--header-->
+		<header>
+			<div class="index_Title">
+				<h1>肖小波的个人网页</h1>
+			</div>
+		</header>
+
+		<!--demo-->
+		<div class="w960 fn-clear">
+			<!--aside-->
+			<aside class="fn-left aside_test">
+				<div class="aside_test_title">
+					<h2>练习区<a id="aside_test_none_show">更多&gt;&gt;</a></h2>
+				</div>
+
+				<ul>
+					<li>
+						<a href="textspace/ajax-demo/read.html">ajax读取文件练习</a>
+					</li>
+					<li>
+						<a href="textspace/ajax-demo/myajax.html">ajax读取文件练习2</a>
+					</li>
+					<li>
+						<a href="textspace/flash_Pic/flash_Pic.html">轮播效果</a>
+					</li>
+					<li>
+						<a href="textspace/table-demo/tableDemo.html">关于Table的BOM操作</a>
+					</li>
+					<li>
+						<a href="textspace/cookie-demo/cookie.html">cookie</a>
+					</li>
+				</ul>
+
+				<ul id="aside_test_none" class="aside_test_none">
+					
+					<li>
+						<a href="textspace/regexp-demo/regexp.html">正则表达式</a>
+					</li>
+				</ul>
+
+			</aside>
+
+			<!--article-->
+			<article class="fn-left demoBox">
+				<div class="fn-clear demo_Div">
+					<div class="demo">
+						<a href="endspace/five_win/five.html"><img src="images/demo_five.jpg" /></a>
+						<a href="endspace/five_win/five.html">五子棋</a>
+					</div>
+					<div class="demo">
+						<a href="endspace/snack/snack.html"><img src="images/demo_snack.jpg" /></a>
+						<a href="endspace/snack/snack.html">贪吃蛇</a>
+					</div>
+					<div class="demo">
+						<a href="endspace/jump-jump-1.1/jump-jump.html"><img src=" " /></a>
+						<a href="endspace/jump-jump-1.1/jump-jump.html">一个跑酷游戏？</a>
+					</div>
+					<div class="demo">
+						<a href="endspace/counter/counter.html"><img src="images/demo-counter.jpg" /></a>
+						<a href="endspace/counter/counter.html">计算器</a>
+					</div>
+					<div class="demo">
+						<a href="endspace/css3-demo1/css3-demo1.html"><img src="images/demo_css3-demo1.png" /></a>
+						<a href="endspace/css3-demo1/css3-demo1.html">3D效果初探</a>
+					</div>
+					<div class="demo">
+						<a href="endspace/lvGame/index.html"><img src="images/demo_lve.jpg" /></a>
+						<a href="endspace/lvGame/index.html">打怪升级</a>
+					</div>
+				</div>
+			</article>
+
+		</div>
+
+		<div class="endTest w960">
+			<a href="JavaScript:">毕设纪念处</a>
+		</div>
+
+		<script>
+			demoBoxJs();
+			asideTestJs();
+
+			function asideTestJs() {
+				var TestShowBtn = document.getElementById("aside_test_none_show"); //练习区的更多按钮
+				var asideTestNone = document.getElementById("aside_test_none"); //练习区的隐藏内容
+				asideTestNone.onmouseover = TestShowBtn.onmouseover = function() {
+					asideTestShow();
+				}
+				asideTestNone.onmouseout = TestShowBtn.onmouseout = function() {
+					asideTestHidden();
+				}
+
+				function asideTestShow() {
+					asideTestNone.style.display = "block";
+				}
+
+				function asideTestHidden() {
+					asideTestNone.style.display = "none";
+				}
+			}
+
+			function demoBoxJs() {
+				var demoBox = document.getElementsByClassName("demoBox")[0]; //最外层盒子
+				var demo_Div = demoBox.getElementsByClassName("demo_Div")[0]; //存放demo的运动盒子
+				var demo = demo_Div.getElementsByClassName("demo"); //demo数组
+
+				var demoLength = demo.length;
+				var timer = null; //定时器
+				for(var i = 0; i < demoLength; i++) { //复制demo
+					var addDiv = document.createElement("div");
+					addDiv.innerHTML = demo[i].innerHTML;
+					addDiv.className = "demo";
+					demo_Div.appendChild(addDiv);
+				}
+
+				timer = setInterval(move, 30);
+
+				demo_Div.onmouseover = function() { //鼠标移入停止运动
+					clearInterval(timer);
+				};
+
+				demo_Div.onmouseout = function() { //鼠标移出继续运动
+					timer = setInterval(move, 30);
+				};
+
+				function move() {
+					if(demo_Div.offsetLeft < -736) {
+						demo_Div.style.left = 0;
+					}
+					demo_Div.style.left = demo_Div.offsetLeft - 1 + "px";
+
+				}
+			}
+		</script>
+	</body>
+
+</html>
