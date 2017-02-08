@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>table表格中的创建和删除</title>
+		<script>
+			window.onload = function() {
+				var oTab = document.getElementById("tab1");
+				var name = document.getElementById("name");
+				var study = document.getElementById("study");
+				var age = document.getElementById("age");
+				var btn = document.getElementById("btn1");
+				var serchBtn = document.getElementById("serchBtn");
+				var sortBtn=document.getElementById("sortBtn");
+				var oldId = oTab.tBodies[0].rows.length + 1;
+
+				/*
+				 * 给表单里的每一行加上删除方法
+				 */
+				for(var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+					oTab.getElementsByTagName("a")[i].onclick = function() {
+						oTab.tBodies[0].removeChild(this.parentNode.parentNode);
+					}
+				}
+
+				/*
+				 * 搜索人物信息
+				 */
+				serchBtn.onclick = function() 
+				{
+					for(var i = 0; i < oTab.tBodies[0].rows.length; i++) 
+					{
+						var serchName = name.value.toLowerCase().split(" ");
+						var adminName = oTab.tBodies[0].rows[i].cells[1].innerHTML.toLowerCase();
+						oTab.tBodies[0].rows[i].style.background = "";
+						for(var a = 0; a < serchName.length; a++) 
+						{
+								if(adminName.search(serchName[a]) != -1) 
+								{
+									oTab.tBodies[0].rows[i].style.background = "red";
+								} 
+						}
+					}
+
+				}
+
+				/*
+				 * 添加人物信息
+				 */
+				btn.onclick = function() {
+					if(name.value == "" || study.value == "" || age.value == "") {
+						alert("请输入人物数据！");
+						return;
+					}
+
+					var oTr = document.createElement("tr");
+					oTab.tBodies[0].appendChild(oTr);
+
+					var oTd = document.createElement("td");
+					oTd.innerHTML = oldId++;
+					oTr.appendChild(oTd);
+
+					var oTd = document.createElement("td");
+					oTd.innerHTML = name.value;
+					oTr.appendChild(oTd);
+
+					var oTd = document.createElement("td");
+					oTd.innerHTML = study.value;
+					oTr.appendChild(oTd);
+
+					var oTd = document.createElement("td");
+					oTd.innerHTML = age.value;
+					oTr.appendChild(oTd);
+
+					var oTd = document.createElement("td");
+					oTd.innerHTML = "<a href='javascript:'>删除</>";
+					oTr.appendChild(oTd);
+
+					oTd.getElementsByTagName("a")[0].onclick = function() {
+						oTab.tBodies[0].removeChild(this.parentNode.parentNode);
+					}
+
+				}
+				
+				sortBtn.onclick=function(){
+					var arr=[];
+					for(var i = 0; i < oTab.tBodies[0].rows.length; i++) {
+						arr[i] = oTab.tBodies[0].rows[i];
+					}
+					arr.sort(function(tr1,tr2){
+						var n1=parseInt(tr1.cells[3].innerHTML);
+						var n2=parseInt(tr2.cells[3].innerHTML);
+						return n1-n2;
+					});
+					for(var i = 0; i < arr.length; i++) {
+						oTab.tBodies[0].appendChild(arr[i]);
+					}
+				};
+			}
+		</script>
+	</head>
+
+	<body>
+		姓名：<input id="name" type="text" /> 学历：
+		<input id="study" type="text" /> 年龄：
+		<input id="age" type="text" />
+		<button id="btn1">添加</button>
+		<button id="serchBtn">按姓名搜索</button>
+		<button id="sortBtn">按年龄排序</button>
+		<table id="tab1" border="1px" width="500px">
+			<thead>
+				<td>ID</td>
+				<td>姓名</td>
+				<td>学历</td>
+				<td>年龄</td>
+				<td>操作</td>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>Blue</td>
+					<td>本科</td>
+					<td>23</td>
+					<td>
+						<a href='javascript:'>删除
+							</>
+					</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>李四</td>
+					<td>专科</td>
+					<td>25</td>
+					<td>
+						<a href='javascript:'>删除
+							</>
+					</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>张伟</td>
+					<td>本科</td>
+					<td>23</td>
+					<td>
+						<a href='javascript:'>删除
+							</>
+					</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>王五</td>
+					<td>研究生</td>
+					<td>28</td>
+					<td>
+						<a href='javascript:'>删除
+							</>
+					</td>
+				</tr>
+				<tr>
+					<td>5</td>
+					<td>赵四</td>
+					<td>本科</td>
+					<td>24</td>
+					<td>
+						<a href='javascript:'>删除
+							</>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+
+</html>

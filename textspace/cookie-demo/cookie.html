@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>cookie记住用户名</title>
+		<script>
+			window.onload=function(){
+				var oForm=document.getElementById("form1");
+				var oUser=document.getElementsByName("user")[0];
+				oForm.onsubmit=function(){
+					setCookie("user", oUser.value, 14)
+				}
+				if (getCookie("user")) {
+					oUser.value=getCookie("user");
+				}
+			}
+			
+				function setCookie(name, value, iDay) { //获取八天后的时间
+				var oDate = new Date();
+				oDate.setDate(oDate.getDate() + iDay);
+				document.cookie = name + "=" + value + ";expires=" + oDate; //给cookie添加数据，并设置过期时间为7天
+				//		document.cookie="pass=1234;expires="+oDate;           //cookie=“”----》作用为添加数据，而不会覆盖原有数据
+
+			}
+			
+			function getCookie(name){
+				var arr=document.cookie.split(";");
+				for (var i=0;i<arr.length;i++) {
+					var arr2=arr[i].split("=");
+					if (arr2[0]==name) {
+						return arr2[1];
+					}
+					
+				}
+				
+			}
+			
+			function removeCookie(name){
+				setCookie(name,1,-1);
+			}
+		</script>
+	</head>
+
+	<body>
+		<form id="form1" action="../../index.html" method="get">
+			<input type="text" name="user"/>
+			<input type="password" name="pass"/>
+			<input type="submit" value="提交"/>
+		</form>
+
+		<!--<script>
+			setCookie("姓名", "小明");
+			setCookie("年龄", "23");
+			setCookie("性别", "男");
+			getCookie("姓名");
+			removeCookie("姓名");removeCookie("年龄");removeCookie("性别");
+
+			function setCookie(name, value, iDay) { //获取八天后的时间
+				var oDate = new Date();
+				oDate.setDate(oDate.getDate() + iDay);
+				document.cookie = name + "=" + value + ";expires=" + oDate; //给cookie添加数据，并设置过期时间为7天
+				//		document.cookie="pass=1234;expires="+oDate;           //cookie=“”----》作用为添加数据，而不会覆盖原有数据
+
+			}
+			
+			function getCookie(name){
+				var arr=document.cookie.split(";");
+				for (var i=0;i<arr.length;i++) {
+					var arr2=arr[i].split("=");
+					if (arr2[0]==name) {
+						alert(arr2[1]);
+					}
+					
+				}
+				
+			}
+			
+			function removeCookie(name){
+				setCookie(name,1,-1);
+			}
+		</script>-->
+	</body>
+
+</html>

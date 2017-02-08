@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			window.onload=function(){
+				var oBtn=document.getElementById("btn1");
+				oBtn.onclick=function(){
+					//创建ajax对象
+					if (window.XMLHttpRequest) {
+						var oAjax=new XMLHttpRequest();
+					} else{
+						var oAjax=new ActiveXObject("Microsoft.XMLhttp");
+					}
+					
+					//连接服务器
+					//open("方法","文件名","异步传输")
+					oAjax.open("GET","aaa.txt?t="+new Date().getTime(),true);
+					
+					//发送请求
+					oAjax.send();
+					
+					//接收返回
+					oAjax.onreadystatechange=function(){
+						if (oAjax.readyState==4) {
+							if(oAjax.status==200){
+								alert("成功"+oAjax.responseText);
+							}else{
+								alert("失败");
+							}
+						}
+					}
+					
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<input id="btn1" type="button" value="读取" />
+	</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>计算器</title>
+		<link rel="stylesheet" type="text/css" href="../../css/theAll.css" />
+		<style type="text/css">
+			#counter {
+				width: 545px;
+				height: 445px;
+				margin: 50px auto;
+				padding-top: 55px;
+				background: #373538;
+				border-radius: 5px;
+				box-shadow: 0px 0px 3px #000;
+			}
+			
+			#result {
+				width: 490px;
+				height: 50px;
+				background: #dfe8ad;
+				margin: 0 auto;
+				border-radius: 5px;
+				text-align: right;
+				font-size: 50px;
+				color: #000;
+				line-height: 50px;
+			}
+			
+			#number {
+				width: 490px;
+				height: 315px;
+				margin: 30px auto 0px;
+			}
+			
+			#number ul li {
+				width: 80px;
+				height: 60px;
+				background: #212121;
+				border-radius: 5px;
+				box-shadow: 0px 0px 6px #ddd;
+				float: left;
+				margin: 9px;
+				color: #fff;
+				font-size: 22px;
+				font-family: "Arial";
+				line-height: 60px;
+				text-align: center;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		<article id="counter">
+			<p></p>
+			<div id="result">0</div>
+			<div id="number">
+				<ul>
+					<li theNumber="7">7</li>
+					<li theNumber="8">8</li>
+					<li theNumber="9">9</li>
+					<li equal="←">←</li>
+					<li equal="C">C</li>
+					<li theNumber="4">4</li>
+					<li theNumber="5">5</li>
+					<li theNumber="6">6</li>
+					<li operation="*">*</li>
+					<li operation="/">/</li>
+					<li theNumber="1">1</li>
+					<li theNumber="2">2</li>
+					<li theNumber="3">3</li>
+					<li operation="+">+</li>
+					<li operation="-">-</li>
+					<li theNumber="0">0</li>
+					<li theNumber="00">00</li>
+					<li equal=".">.</li>
+					<li operation="%">%</li>
+					<li equal="=">=</li>
+				</ul>
+			</div>
+		</article>
+
+		<script>
+			var resultDom = document.getElementById("result");
+			var oBtn = document.getElementsByTagName("li");
+			var operate = true; //操作符当前可以点击
+			var xop = true; //小数点当前可以点击
+			for(var i = 0; i < oBtn.length; i++) {
+				oBtn[i].onclick = function() {
+					var str = resultDom.innerText;
+					//获取里面的内容
+					var theNumber = this.getAttribute("theNumber"); //数字
+					var operation = this.getAttribute("operation"); //操作符
+					var equal = this.getAttribute("equal"); //其余按钮
+					if(theNumber) { //数字点击
+						if(str.length > 18) {
+							return;
+						}
+						//如果是0就是“”填充
+						str = (str == "0" ? "" : str);
+						//拼接点击的数字
+						str += theNumber;
+						operate = true;
+						//赋值给文本框
+						resultDom.innerText = str;
+					}
+					if(operation && operate == true) { //运算符
+						if(resultDom.innerText.length > 18) {
+							return;
+						}
+						var num = resultDom.innerText;
+						num = (num == "0" ? "0" : num);
+						// 拼接操作符
+						resultDom.innerText = num + operation;
+						operate = false;
+					}
+					if(equal=="←"){
+						if(str.length==1){
+							str="0";
+							resultDom.innerText=0;
+						}else{
+						str=str.substring(0, str.length - 1);
+						resultDom.innerText =str;
+						}
+					}
+					if(equal == ".") {   //小数点
+						if(xop) {
+							str = str + ".";
+							resultDom.innerText = str;
+							xop = false;
+						}
+
+					}
+					if(equal == "C") { //清空按钮
+						resultDom.innerText = 0;
+						operate = true;
+						xop = true;
+					}
+					if(equal == "=") { //等于号
+						//运算结果
+						var r = eval(str);
+						resultDom.innerText = r;
+						operate = true;
+						var r = resultDom.innerText + "";
+						//indexOf() 方法可返回某个指定的字符串值在字符串中首次出现的位置
+						//如果要检索的字符串值没有出现，则该方法返回 -1
+						xop = r.indexOf(".") == -1 ? true : false;
+					}
+
+				}
+			}
+		</script>
+	</body>
+
+</html>
