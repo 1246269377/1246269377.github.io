@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+	<!--下一步：1、更改大小比例，完善体验
+	     2、调慢速度，实现按键主动加速
+-->
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#theBody {
+				width: 998px;
+				height: 698px;
+				border: 1px solid black;
+				padding: 0;
+				margin: 50px auto;
+				position: relative;
+			}
+			
+			nav {
+				width: 998px;
+				height: 698px;
+				border: 1px solid black;
+				top: 0px;
+				left: 0px;
+				position: absolute;
+			}
+			
+			div {
+				width: 8px;
+				height: 8px;
+				padding: 1px;
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+			
+			.foodDiv {
+				width: 10px;
+				height: 10px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: red;
+			}
+			
+			#snack {
+				width: 8px;
+				height: 8px;
+				padding: 1px;
+				background: blue;
+				position: absolute;
+				top: 100px;
+				left: 100px;
+				z-index: 999;
+			}
+		</style>
+		<script>
+			function impact(obj, arr) {
+				var end = null;
+				for(var i = 0; i < arr.length; i++) {
+					var o = {
+						x: getDefaultStyle(obj, 'left'),
+						y: getDefaultStyle(obj, 'top'),
+						w: getDefaultStyle(obj, 'width'),
+						h: getDefaultStyle(obj, 'height')
+					}
+
+					var d = {
+						x: getDefaultStyle(arr[i], 'left'),
+						y: getDefaultStyle(arr[i], 'top'),
+						w: getDefaultStyle(arr[i], 'width'),
+						h: getDefaultStyle(arr[i], 'height')
+					}
+
+					var px, py;
+
+					px = o.x <= d.x ? d.x : o.x;
+					py = o.y <= d.y ? d.y : o.y;
+
+					// 判断点是否都在两个对象中  
+					if(px >= o.x && px <= o.x + o.w && py >= o.y && py <= o.y + o.h && px >= d.x && px <= d.x + d.w && py >= d.y && py <= d.y + d.h) {
+						end = true;
+					}
+				}
+				if(end) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			/** 获取对象属性 
+			 * @param obj       对象 
+			 * @param attribute 属性 
+			 */
+			//function getStyle(obj, name, value) { if(arguments.length == 2) { if(obj.currentStyle) { return obj.currentStyle[name]; } else { return getComputedStyle(obj, false)[name]; } } else if(arguments.length == 3) { obj.style[name] = value; } }
+			function getDefaultStyle(obj, attribute) {
+				return parseInt(obj.currentStyle ? obj.currentStyle[attribute] : document.defaultView.getComputedStyle(obj, false)[attribute]);
+			}
+
+			window.onload = function() {
+				var header = document.getElementById("theBody"); //活动区域
+				var aDiv = document.getElementsByClassName("snack"); //贪吃蛇自增的身体部分
+				var oDiv = document.getElementById("snack"); //贪吃蛇的头部
+				var nav = document.getElementsByTagName("nav")[0]; //食物所在层级
+				var wallDiv = []; //无法碰触数组
+				var foodDiv = []; //食物
+				var foodNow = false;
+				var wall = {
+					leftWall: false,
+					rightWall: false,
+					topWall: false,
+					bottomWall: false
+				};
+				var eatFood = false;
+				var timer = setInterval(function() {
+					if(eatFood == true) {
+						var addDiv = document.createElement("div");
+						//addDiv.style.background = "red";
+						addDiv.className = "snack";
+						header.appendChild(addDiv);
+						wallDiv.push(addDiv);
+						eatFood = false;
+					}
+				}, 30);
+				var addFood = null;
+				var speed = oDiv.offsetWidth;
+				var left = false;
+				var right = false;
+				var top = false;
+				var bottom = false;
+
+				addFood = setInterval(function() { //创建食物的div
+					if(foodNow == false) {
+						var theFood = document.createElement("footer");
+						theFood.className = "foodDiv";
+						var l = speed * parseInt(Math.random() * (header.offsetWidth / speed));
+						var t = speed * parseInt(Math.random() * (header.offsetHeight / speed));
+						if(l < 0) {
+							l = 10;
+						} else if(l > 990) {
+							l = 990;
+						};
+						if(t < 0) {
+							l = 10;
+						} else if(t > 690) {
+							l = 690;
+						};
+						theFood.style.left = l + "px";
+						theFood.style.top = t + "px";
+						nav.appendChild(theFood);
+						foodDiv.push(theFood);
+						foodNow = true;
+					}
+				}, 300);
+
+				setInterval(function() {
+					function checkOver() {
+						if(oDiv.offsetLeft < 0 || oDiv.offsetTop < 0 || oDiv.offsetLeft > header.offsetWidth || oDiv.offsetTop > header.offsetHeight) {
+							alert("撞墙而死！");
+							document.write("Game Over!");
+						}
+						if(impact(oDiv, wallDiv)) {
+							alert("你吃掉了自己!");
+							document.write("Game Over!");
+						}
+						if(impact(oDiv, foodDiv)) {
+							var oFoot = document.getElementsByTagName("footer")[0];
+							nav.removeChild(oFoot);
+							foodDiv.shift();
+							foodNow = false;
+							eatFood = true;
+						}
+					}
+
+					function adddStep() {
+						for(var i = aDiv.length - 1; i > 0; i--) {
+							aDiv[i].style.left = aDiv[i - 1].offsetLeft + "px";
+							aDiv[i].style.top = aDiv[i - 1].offsetTop + "px";
+							if(aDiv[i].style.background != "red") {
+								aDiv[i].style.background = "red";
+							}
+						}
+					}
+
+					if(left && (!wall.leftWall)) {
+						wall = {
+							leftWall: false,
+							rightWall: true,
+							topWall: false,
+							bottomWall: false
+						};
+						oDiv.style.left = oDiv.offsetLeft - speed + "px";
+						adddStep();
+						checkOver();
+					}
+					if(top && (!wall.topWall)) {
+						wall = {
+							leftWall: false,
+							rightWall: false,
+							topWall: false,
+							bottomWall: true
+						};
+						oDiv.style.top = oDiv.offsetTop - speed + "px";
+						adddStep();
+						checkOver();
+					}
+					if(right && (!wall.rightWall)) {
+						wall = {
+							leftWall: true,
+							rightWall: false,
+							topWall: false,
+							bottomWall: false
+						};
+						oDiv.style.left = oDiv.offsetLeft + speed + "px";
+						adddStep();
+						checkOver();
+					}
+					if(bottom && (!wall.bottomWall)) {
+						wall = {
+							leftWall: false,
+							rightWall: false,
+							topWall: true,
+							bottomWall: false
+						};
+						oDiv.style.top = oDiv.offsetTop + speed + "px";
+						adddStep();
+						checkOver();	
+					}
+				}, 70);
+
+				document.onkeydown = function(ev) {
+					var ev = ev || event;
+					var keyCode = ev.keyCode;
+					switch(keyCode) {
+						case 37:
+							top = false;
+							bottom = false;
+							left = true;
+							break;
+						case 38:
+							left = false;
+							right = false;
+							top = true;
+							break;
+						case 39:
+							top = false;
+							bottom = false;
+							right = true;
+							break;
+						case 40:
+							left = false;
+							right = false;
+							bottom = true;
+							break;
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="theBody">
+			<div id="snack" class="snack"></div>
+
+			<div class="snack"></div>
+			</header>
+			<nav></nav>
+		</div>
+
+</html>

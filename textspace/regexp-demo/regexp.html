@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>正则表达式</title>
+		<script>
+			window.onload=function(){
+				var oEmail=document.getElementById("email");
+				var oBtn1=document.getElementById("btn1");
+				var oTxt1=document.getElementById("txt1");
+				var oTxt2=document.getElementById("txt2");
+				var oBtn2=document.getElementById("btn2");
+				
+				oBtn1.onclick=function(){
+					var reg=/^\w+@[a-z0-9]+\.[a-z]+$/i;
+					
+					if (reg.test(oEmail.value)) {
+						alert("邮箱填写正确");
+					} else{
+						alert("邮箱填写错误");
+					}
+				}
+				
+				oBtn2.onclick=function(){
+					var reg=/<[^<>]+>/g;
+					
+					oTxt2.value=oTxt1.value.replace(reg,"xxx");
+				}
+				
+			}
+		</script>
+	</head>
+	<body>
+		<input id="email" />
+		<input id="btn1" type="button" value="验证邮箱" /><br />
+		<textarea id="txt1" rows="10" cols="40">            <p>　　今天的天气非常的晴是。”<p>　　因为，不死的话就不会有那么多的线。<p>　　不知不觉间，方里动了。<p>　　“唰————！”<p>　　伴随着何的攻击都更加的危险。<p>　　望着那一扑而来的凶暴怪物，方里只是握紧了手中的匕首，直死魔眼闪烁着冰冷的光芒。<p>　　一边是张开獠牙，向着猎物扑去的怪物。<p>　　一边是紧握凶器，向着怪物冲去的人类。<p>　　双方的目的都只有一个。<p>　　————给对方带去死亡。<p>　　（求点击！求推荐！求收藏！求支持哇！）</textarea><br />
+		<input id="btn2" type="button" value="过滤"/><br />
+		<textarea id="txt2" rows="10" cols="40"></textarea>
+		<div>
+			<a style="font: 12px/2 arial;">sadsad</a>
+		</div>
+	</body>
+</html>
