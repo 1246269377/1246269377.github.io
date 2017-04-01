@@ -14,18 +14,18 @@
 			}
 			
 			#theBody {
-				width: 998px;
-				height: 698px;
-				border: 1px solid black;
+				width: 1000px;
+				height: 700px;
+				outline: 1px solid black;
 				padding: 0;
 				margin: 50px auto;
 				position: relative;
 			}
 			
 			nav {
-				width: 998px;
-				height: 698px;
-				border: 1px solid black;
+				width: 1000px;
+				height: 700px;
+				outline: 1px solid black;
 				top: 0px;
 				left: 0px;
 				position: absolute;
@@ -41,9 +41,10 @@
 			}
 			
 			.foodDiv {
-				width: 10px;
-				height: 10px;
+				width: 8px;
+				height: 8px;
 				position: absolute;
+				margin: 1px;
 				left: 0;
 				top: 0;
 				background: red;
@@ -170,7 +171,7 @@
 							alert("你吃掉了自己!");
 							document.write("Game Over!");
 						}
-						if(impact(oDiv, foodDiv)) {
+						if(impact(oDiv, foodDiv)) {   //吃到食物
 							var oFoot = document.getElementsByTagName("footer")[0];
 							nav.removeChild(oFoot);
 							foodDiv.shift();

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<form method="get" autocomplete="on" novalidate action="http://www.baidu.com" enctype="application/x-www-form-urlencoded">
+			<!--autocomplete:开启历史痕迹 
+			novalidate:如果使用该属性，则提交表单时不进行验证。(如email类型等等);
+		    enctype:编码方式？？？-->
+		    <p><label>头像:<input type="file" name="file" required></label></p>
+			<p><label>姓名:<input type="text" id="user" name="user" required/></label></p>
+			<!--required-----》表单自动检测必填项-->
+			<p><label>电话:<input id="tel" type="tel" name="tel" required maxlength="11" pattern="regexp验证输入格式"></label></p>
+			<p><label>邮箱:<input type="email" name="e-mail" required></label></p>
+			<fieldset>
+				<legend>披萨大小</legend>
+				<label><input type="radio" name="size" value="small">小</label>
+				<label><input type="radio" name="size" value="medium">中</label>
+				<label><input type="radio" name="size" value="large">大</label>
+			</fieldset>
+			<fieldset>
+				<legend>披萨配料</legend>
+				<label><input type="checkbox" name="topping" value="bacon">熏肉</label>
+				<label><input type="checkbox" name="topping" value="cheese">奶酪</label>
+				<label><input type="checkbox" name="topping" value="onion">洋葱</label>
+				<label><input type="checkbox" name="topping" value="mushroom">蘑菇</label>
+			</fieldset>
+			<p><label>配送时间<input type="time" name="delivery" min="11:00" max="21:00" step="900"></label></p>
+			<!--9点到21点，一步15分钟（900秒）-->
+			<p><button>提交订单</button></p>
+		</form>
+	</body>
+
+</html>

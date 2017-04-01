@@ -33,20 +33,25 @@
 						<a href="textspace/ajax-demo/myajax.html">ajax读取文件练习2</a>
 					</li>
 					<li>
+						<a href="textspace/form-demo/Form表单--H5格式.html">form表单H5实例</a>
+					</li>
+					<li>
 						<a href="textspace/flash_Pic/flash_Pic.html">轮播效果</a>
 					</li>
 					<li>
-						<a href="textspace/table-demo/tableDemo.html">关于Table的BOM操作</a>
-					</li>
-					<li>
-						<a href="textspace/cookie-demo/cookie.html">cookie</a>
+						<a href="endspace/WY-endTest/hom.html">网易大作业</a>
 					</li>
 				</ul>
 
 				<ul id="aside_test_none" class="aside_test_none">
-					
+					<li>
+						<a href="textspace/cookie-demo/cookie.html">cookie</a>
+					</li>
 					<li>
 						<a href="textspace/regexp-demo/regexp.html">正则表达式</a>
+					</li>
+					<li>
+						<a href="textspace/table-demo/tableDemo.html">关于Table的BOM操作</a>
 					</li>
 				</ul>
 
@@ -55,6 +60,10 @@
 			<!--article-->
 			<article class="fn-left demoBox">
 				<div class="fn-clear demo_Div">
+					<div class="demo">
+						<a href="endspace/wy-endTest/hom.html"><img src="images/demo_wy-endTest.jpg" /></a>
+						<a href="endspace/wy-endTest/hom.html">网易大作业</a>
+					</div>
 					<div class="demo">
 						<a href="endspace/five_win/five.html"><img src="images/demo_five.jpg" /></a>
 						<a href="endspace/five_win/five.html">五子棋</a>
@@ -85,12 +94,20 @@
 		</div>
 
 		<div class="endTest w960">
-			<a id="assas" href="JavaScript:">毕设纪念处</a>
+			<a id="assas" style="cursor: pointer;">毕设纪念处</a>
 		</div>
 
 		<script>
-			demoBoxJs();
-			asideTestJs();
+			demoBoxJs();  //demo盒子自移动
+			asideTestJs(); //侧边栏hover展开效果
+			someClickEvent();
+			
+			function someClickEvent(){
+				var a=document.getElementById("assas");
+				a.onclick=function(){
+					alert("真是一段让人不堪回首的往事");
+				}
+			}
 
 			aNewWindowOpen();        //a标签在新窗口打开
 			
@@ -155,7 +172,6 @@
 						demo_Div.style.left = 0;
 					}
 					demo_Div.style.left = demo_Div.offsetLeft - 1 + "px";
-
 				}
 			}
 		</script>

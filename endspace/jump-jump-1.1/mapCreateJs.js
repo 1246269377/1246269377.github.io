@@ -89,3 +89,12 @@ function earthCheck() { //地形构建函数
 	}
 	return theWall;
 }
+
+function checkMoveLength(){ //检查显示移动距离百分比
+	var world = document.getElementById("world");
+	var showMoveLength=document.getElementById("checkPercent").getElementsByTagName("span")[0];
+	checkMoveTimer=setInterval(function(){
+		console.log(world.style.left);
+		showMoveLength.innerText=(-parseInt(world.style.left)/5)+"/"+((world.offsetWidth)/5);
+	},30);
+}

@@ -13,11 +13,14 @@ earthCheck() ----------------- //地形构建函数
  */
 var canRun = true; //是否能运动
 var world = document.getElementById("world"); //获取地图上级世界
-var speed = 5; //人物移动速度
-var runLength=1700;
+var speed = 5; //世界移动速度
+var runLength = 1700;
+var checkMoveTimer = null; //显示左上移动距离的定时器
+var gameStart = true;
 
 window.onload = function() {
 	myAddEvent(window, 'load', mapCreateEvent()); //地图创建
+	myAddEvent(window, 'load', checkMoveLength()); //显示移动百分比
 	myAddEvent(window, 'load', bodyMoveEvent()); //人物移动
 }
 
@@ -42,47 +45,61 @@ function bodyMoveEvent() { //人物移动
 				mainBody.style.left = mainBody.offsetLeft - speed + 'px';
 			}
 			world.style.left = world.offsetLeft - speed + "px";
-			runLength+=speed;
-				if (runLength>=(world.offsetWidth)) {
-					alert('you win');
-					clearInterval(gTimer);
-					clearInterval(runTimer);
-					window.onload=function(){
-						
-					};
-				}
-				if(mainBody.offsetTop>870){
-					alert('you die');
-					clearInterval(gTimer);
-					clearInterval(runTimer);
-					window.onload=function(){
-						
-					};
-				}
-				if(mainBody.offsetLeft<0){
-					alert('you die');
-					clearInterval(gTimer);
-					clearInterval(runTimer);
-					window.onload=function(){
-						
-					};
-				}
-			
+			runLength += speed;
+			if(runLength >= (world.offsetWidth)) {
+				alert('you win');
+				gameStart = false;
+				clearInterval(gTimer);
+				clearInterval(runTimer);
+				clearInterval(checkMoveTimer);
+				window.onload = function() {
+
+				};
+			}
+			if(mainBody.offsetTop > 870) {
+				alert('you die');
+				gameStart = false;
+				clearInterval(gTimer);
+				clearInterval(runTimer);
+				clearInterval(checkMoveTimer);
+				window.onload = function() {
+
+				};
+			}
+			if(mainBody.offsetLeft < 0) {
+				alert('you die');
+				gameStart = false;
+				clearInterval(gTimer);
+				clearInterval(runTimer);
+				clearInterval(checkMoveTimer);
+				window.onload = function() {
+
+				};
+			}
+
 		}
-	}, 30);
+	}, 25);
 
 	document.onkeydown = function(ev) { //方向键按下
 		var ev = ev || event;
 		var keyCode = ev.keyCode;
 		if(keyCode == 38) {
-			mainBodyJump();
+			if(gameStart == false) {
+				return;
+			} else {
+				mainBodyJump();
+			}
 		}
 
 	}
-	document.ontouchstart=document.onclick=function(){
-		mainBodyJump();
+	document.ontouchstart = document.onclick = function() {
+		if(gameStart == false) {
+				return;
+			} else {
+				mainBodyJump();
+			}
 	}
-	
+
 	function mainBodyJump() { //人物跳跃
 		if(jump > 0) {
 			clearInterval(gTimer);
@@ -92,6 +109,7 @@ function bodyMoveEvent() { //人物移动
 			}, function() {
 				gTimer = setInterval(function() { //重力定时器----无时无刻不在下落
 					gSport();
+
 				}, 10);
 			});
 
@@ -106,9 +124,8 @@ function bodyMoveEvent() { //人物移动
 		var standStats = impact(mainBody, earth);
 		if(standStats.bottom == false) {
 			mainBody.style.top = (fallHeight + gspeed) + 'px';
-		} else {
+		} else{
 			jump = 1;
-
 		}
 	}
 
@@ -226,7 +243,6 @@ function bodyMoveEvent() { //人物移动
 				y: arr[i].offsetTop,
 				w: arr[i].offsetWidth,
 				h: arr[i].offsetHeight - arr[i].offsetTop
-
 			}
 
 			if(left.X >= d.x && left.X <= d.x + d.w && left.Y1 >= d.y && left.Y1 <= d.y + d.h || left.X >= d.x && left.X <= d.x + d.w && left.Y2 >= d.y && left.Y2 <= d.y + d.h) {
