@@ -7,7 +7,7 @@ function getStyle(obj, name)
 	else
 	{
 		return getComputedStyle(obj, false)[name];
-	}
+	} 
 }
 
 function startMove(obj, json, fnEnd) {

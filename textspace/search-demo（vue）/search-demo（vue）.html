@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>百度搜索接口（vue.js）</title>
+		<style>
+			.gray{
+				background: #ccc;
+			}
+		</style>
+		<script type="text/javascript" src="../../myJs/vue.js" ></script>
+		<script type="text/javascript" src="../../myJs/vue-resource.js" ></script>
+		<script>
+			window.onload=function(){
+				new Vue({
+					el:"#box",
+					data:{
+						myData:[],
+						tl:"",
+						now:-1,
+						count:0
+					},
+					methods:{
+						get:function(ev){
+							if (ev.keyCode==38||ev.keyCode==40) {
+								return;
+							}
+							if (ev.keyCode==13) {
+								window.open("https://www.baidu.com/s?wd="+this.tl);
+								this.tl='';
+							}
+							this.$http.jsonp("https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+							{wd:this.tl},
+							{jsonp:'cb'}).then(function(res){
+								this.count++;
+								this.myData=res.data.s;
+							},function(){
+								
+							})
+						},
+						changeDown:function(){
+							if (this.now==(this.myData.length-1)) {
+								this.now=-1;
+							}else{
+							    this.now++;
+							}
+							this.tl=this.myData[this.now];
+						},
+						changeUp:function(){
+							if (this.now==-1) {
+								this.now=this.myData.length-1;
+							}else{
+							    this.now--;
+						    }
+							this.tl=this.myData[this.now];
+						}
+					}
+				})
+			}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<input type="text" v-model="tl" @keyup="get($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()"/>
+			<ul>
+				<li v-for="(value,index) in myData" :class="{gray:index==now}">
+					{{value}},{{key}},{{index}}
+				</li>
+			</ul>
+			<p v-show="myData.length==0">暂无数据...</p>
+			<p>{{myData}}</p>
+			<p>{{count}}</p>
+			<p>{{now}}</p>
+			<p>{{this.myData.length}}</p>
+			<p>提示：回车键进行搜索！</p>
+		</div>
+	</body>
+</html>

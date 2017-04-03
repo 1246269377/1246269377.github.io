@@ -45,7 +45,7 @@ function ajax(json){
     if(window.XMLHttpRequest){
         var oAjax=new XMLHttpRequest();
     }else{
-        var oAjax=new ActiveXObject('Microsoft.XMLHTTP');
+        var oAjax=new ActiveXObject('Microsoft.XMLHTTPS');
     }
 //2.连接服务器（打开和服务器的连接）
 //3.发送
