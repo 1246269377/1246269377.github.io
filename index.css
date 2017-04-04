@@ -9,11 +9,11 @@ header{
 	padding-top: 30px;
 	background: url(images/head-bg.png);
 	background-size: 100% 100%;
-	min-width: 960px;
+	min-width: 1205px;
 }
 .index_Title {
 	height: 50px;
-	width: 960px;
+	width: 1205px;
 	margin: 0 auto 50px;
 	padding: 50px 0;
 	background: url(images/head-banner.jpg);
@@ -68,7 +68,6 @@ header{
 }
 .aside_test_none{
 	height: 237px;
-	display: none;
 	position: absolute;
 	left: 210px;
 	top: 0;
@@ -81,7 +80,7 @@ header{
 .demoBox{
 	border: 1px dotted #eee;
 	height: 235px;
-	width: 728px;
+	width: 973px;
 	overflow: hidden;
 	position: relative;
 }

@@ -7,108 +7,52 @@
 		<link rel="stylesheet" type="text/css" href="css/theAll.css" />
 		<link rel="stylesheet" type="text/css" href="index.css" />
 		<script src="ajax.js"></script>
-	</head>
-
-	<body>
-		<!--header-->
-		<header>
-			<div class="index_Title">
-				<h1>肖小波的个人网页</h1>
-			</div>
-		</header>
-
-		<!--demo-->
-		<div class="w960 fn-clear">
-			<!--aside-->
-			<aside class="fn-left aside_test">
-				<div class="aside_test_title">
-					<h2>练习区<a id="aside_test_none_show">更多&gt;&gt;</a></h2>
-				</div>
-
-				<ul>
-					<li>
-						<a href="textspace/userInfoList-demo/userInfoList.html">用户信息表（Bs+Vue）</a>
-					</li>
-					<li>
-						<a href="textspace/search-demo（vue）/search-demo（vue）.html">百度搜索接口测试--vue</a>
-					</li>
-					<li>
-						<a href="textspace/form-demo/Form表单--H5格式.html">form表单H5实例</a>
-					</li>
-					<li>
-						<a href="textspace/flash_Pic/flash_Pic.html">轮播效果</a>
-					</li>
-					<li>
-						<a href="endspace/WY-endTest/hom.html">网易大作业</a>
-					</li>
-				</ul>
-
-				<ul id="aside_test_none" class="aside_test_none">
-					<li>
-						<a href="textspace/cookie-demo/cookie.html">cookie</a>
-					</li>
-					<li>
-						<a href="textspace/regexp-demo/regexp.html">正则表达式</a>
-					</li>
-					<li>
-						<a href="textspace/table-demo/tableDemo.html">关于Table的BOM操作</a>
-					</li>
-					<li>
-						<a href="textspace/ajax-demo/read.html">ajax读取文件练习</a>
-					</li>
-					<li>
-						<a href="textspace/ajax-demo/myajax.html">ajax读取文件练习2</a>
-					</li>
-				</ul>
-
-			</aside>
-
-			<!--article-->
-			<article class="fn-left demoBox">
-				<div class="fn-clear demo_Div">
-					<div class="demo">
-						<a href="endspace/wy-endTest/hom.html"><img src="images/demo_wy-endTest.jpg" /></a>
-						<a href="endspace/wy-endTest/hom.html">网易大作业</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/five_win/five.html"><img src="images/demo_five.jpg" /></a>
-						<a href="endspace/five_win/five.html">五子棋</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/snack/snack.html"><img src="images/demo_snack.jpg" /></a>
-						<a href="endspace/snack/snack.html">贪吃蛇</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/jump-jump-1.1/jump-jump.html"><img src=" " /></a>
-						<a href="endspace/jump-jump-1.1/jump-jump.html">一个跑酷游戏？</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/counter/counter.html"><img src="images/demo-counter.jpg" /></a>
-						<a href="endspace/counter/counter.html">计算器</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/css3-demo1/css3-demo1.html"><img src="images/demo_css3-demo1.png" /></a>
-						<a href="endspace/css3-demo1/css3-demo1.html">3D效果初探</a>
-					</div>
-					<div class="demo">
-						<a href="endspace/lvGame/index.html"><img src="images/demo_lve.jpg" /></a>
-						<a href="endspace/lvGame/index.html">打怪升级</a>
-					</div>
-				</div>
-			</article>
-
-		</div>
-
-		<div class="endTest w960">
-			<a id="assas" style="cursor: pointer;">毕设纪念处</a>
-		</div>
-
+		<script src="myJs/vue.js"></script>
 		<script>
+			window.onload=function(){
+				new Vue({
+					el:"#mainBody",
+					data:{
+						aside_test_canShow:false,
+						aside_test_show:[
+							{name:"用户信息表(Vue)",url:"textspace/userInfoList-demo/userInfoList.html"},
+							{name:"百度搜索接口测试--vue",url:"textspace/search-demo/search-demo.html"},
+							{name:"form表单H5实例",url:"textspace/form-demo/form-demo.html"},
+							{name:"轮播效果",url:"textspace/flash_Pic/flash_Pic.html"},
+							{name:"网易大作业",url:"endspace/wy-endTest/hom.html"}
+						],
+						aside_test_none:[
+							{name:"cookie",url:"textspace/cookie-demo/cookie.html"},
+							{name:"正则表达式",url:"textspace/regexp-demo/regexp.html"},
+							{name:"关于Table的BOM操作",url:"textspace/table-demo/tableDemo.html"},
+							{name:"ajax读取文件练习",url:"textspace/ajax-demo/read.html"},
+							{name:"ajax读取文件练习2",url:"textspace/ajax-demo/myajax.html"}
+						],
+						demoBox:[
+							{name:"网易大作业",url:"endspace/wy-endTest/hom.html",imageUrl:"images/demo_wy-endTest.jpg"},
+							{name:"五子棋",url:"endspace/five_win/five.html",imageUrl:"images/demo_five.jpg"},
+							{name:"贪吃蛇",url:"endspace/snack/snack.html",imageUrl:"images/demo_snack.jpg"},
+							{name:"一个跑酷游戏？",url:"endspace/jump-jump-1.1/jump-jump.html",imageUrl:""},
+							{name:"计算器",url:"endspace/counter/counter.html",imageUrl:"images/demo-counter.jpg"},
+							{name:"3D效果初探",url:"endspace/css3-demo1/css3-demo1.html",imageUrl:"images/demo_css3-demo1.png"},
+							{name:"打怪升级",url:"endspace/lvGame/index.html",imageUrl:"images/demo_lve.jpg"},
+						]
+					},
+					methods:{
+						aside_test_changeShow1:function(){
+							this.aside_test_canShow=true;
+						},
+						aside_test_changeShow2:function(){
+							this.aside_test_canShow=false;
+						}
+					}
+				});
+				
 			demoBoxJs();  //demo盒子自移动
-			asideTestJs(); //侧边栏hover展开效果
 			someClickEvent();
 			
 			function someClickEvent(){
+				
 				var a=document.getElementById("assas");
 				a.onclick=function(){
 					alert("真是一段让人不堪回首的往事");
@@ -127,25 +71,6 @@
 							all[i].target="_blank";
 						}
 					}
-				}
-			}
-
-			function asideTestJs() {   //练习区js效果
-				var TestShowBtn = document.getElementById("aside_test_none_show"); //练习区的更多按钮
-				var asideTestNone = document.getElementById("aside_test_none"); //练习区的隐藏内容
-				asideTestNone.onmouseover = TestShowBtn.onmouseover = function() {
-					asideTestShow();
-				}
-				asideTestNone.onmouseout = TestShowBtn.onmouseout = function() {
-					asideTestHidden();
-				}
-
-				function asideTestShow() {
-					asideTestNone.style.display = "block";
-				}
-
-				function asideTestHidden() {
-					asideTestNone.style.display = "none";
 				}
 			}
 
@@ -180,6 +105,59 @@
 					demo_Div.style.left = demo_Div.offsetLeft - 1 + "px";
 				}
 			}
+				
+			}
+		</script>
+	</head>
+
+	<body>
+		<!--header-->
+		<header>
+			<div class="index_Title">
+				<h1>肖小波的个人网页</h1>
+			</div>
+		</header>
+
+		<!--demo-->
+		<div id="mainBody" class="w1205 fn-clear">
+			<!--aside-->
+			<aside class="fn-left aside_test">
+				<div class="aside_test_title">
+					<h2>练习区<a id="aside_test_none_show" @mouseover="aside_test_changeShow1()" @mouseout="aside_test_changeShow2()">更多&gt;&gt;</a></h2>
+				</div>
+
+				<ul>
+					<li v-for="value in aside_test_show">
+						<a :href="value.url">{{value.name}}</a>
+					</li>
+				</ul>
+
+				<ul id="aside_test_none" class="aside_test_none" v-show="aside_test_canShow" @mouseover="aside_test_changeShow1()" @mouseout="aside_test_changeShow2()">
+					<li v-for="value in aside_test_none">
+						<a :href="value.url">{{value.name}}</a>
+					</li>
+				</ul>
+
+			</aside>
+
+			<!--article-->
+			<article id="demoBox" class="fn-left demoBox">
+				<div class="fn-clear demo_Div">
+					<div class="demo" v-for="value in demoBox">
+						<a :href="value.url"><img :src="value.imageUrl" /></a>
+						<a :href="value.url">{{value.name}}</a>
+					</div>
+				</div>
+			</article>
+
+		</div>
+
+		<div class="endTest w1205">
+			<a id="assas" style="cursor: pointer;">毕设纪念处</a>
+		</div>
+
+		<script>
+			
 		</script>
 	</body>
 
