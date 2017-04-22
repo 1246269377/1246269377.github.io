@@ -34,6 +34,7 @@
 							{jsonp:'cb'}).then(function(res){
 								this.count++;
 								this.myData=res.data.s;
+								console.log(res.data);
 							},function(){
 								
 							})
@@ -64,7 +65,7 @@
 			<input type="text" v-model="tl" @keyup="get($event)" @keydown.down="changeDown()" @keydown.up.prevent="changeUp()"/>
 			<ul>
 				<li v-for="(value,index) in myData" :class="{gray:index==now}">
-					{{value}},{{key}},{{index}}
+					{{value}},{{index}}
 				</li>
 			</ul>
 			<p v-show="myData.length==0">暂无数据...</p>
