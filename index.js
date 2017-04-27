@@ -95,20 +95,7 @@ window.onload = function() {
 	demoBoxJs(); //demo盒子自移动
 	someClickEvent();
 	aNewWindowOpen(); //a标签在新窗口打开
-	sideBall() //边缘球动画
-
-	function sideBall() {
-		var sideWidth = Math.floor((document.getElementsByTagName("body")[0].offsetWidth - 1205) / 2);
-		var side = document.getElementsByClassName("sideBall");
-		for(var i = 0; i < side.length; i++) {
-			if(i == 1) {
-				side[i].style.right = 0
-			} else {
-				side[i].style.left = 0
-			}
-			side[i].style.width = sideWidth + "px";
-		}
-	}
+	sideBall(); //边缘球动画
 
 	function someClickEvent() {
 
@@ -168,19 +155,164 @@ window.onload = function() {
 	}
 }
 
-window.onresize=function(){
-	sideBall() //边缘球动画
+window.onresize = function() {
+	var downBall = document.getElementsByClassName("downBall");
+	for(var i = 0; i < downBall.length; i++) {
+		clearInterval(downBall[i].timer);
+		clearInterval(downBall[i].timer2);
+		downBall[i].timer = null;
+		downBall[i].timer2 = null;
+	}
+	sideBall();
+}
 
-	function sideBall() {
-		var sideWidth = Math.floor((document.getElementsByTagName("body")[0].offsetWidth - 1205) / 2);
-		var side = document.getElementsByClassName("sideBall");
-		for(var i = 0; i < side.length; i++) {
-			if(i == 1) {
-				side[i].style.right = 0
-			} else {
-				side[i].style.left = 0
+function sideBall() {
+	var bodySize = document.getElementsByTagName("body")[0].offsetWidth;
+	var sideWidth = bodySize > 1205 ? (bodySize - 1205) / 2 : 0;
+	var side = document.getElementsByClassName("sideBall");
+	var speed = null;
+	var move1 = true;
+	var move2 = true;
+	var downBall = document.getElementsByClassName("downBall");
+	var firstSize = sideWidth * 0.1 + "px";
+	var targetSize = document.getElementsByTagName("body")[0].offsetHeight * 0.8;
+	var targetWidth = sideWidth * 0.6;
+	var backInterval = null;
+	for(var i = 0; i < side.length; i++) {
+		if(i == 1) {
+			side[i].style.right = 0
+		} else {
+			side[i].style.left = 0
+		}
+		side[i].style.width = sideWidth + "px";
+	}
+
+	downBallAct();
+	
+	setInterval(function(){
+		console.log("1");
+		if(move1 == false && move2 == false) {
+			console.log("2");
+			if(backInterval == null) {
+				backInterval = setTimeout(setTimeOut, 2000);
 			}
-			side[i].style.width = sideWidth + "px";
+
+			function setTimeOut() {
+				console.log(move1, move2);
+				move1 = true;
+				move2 = true;
+				for(var i = 0; i < downBall.length; i++) {
+					clearInterval(downBall[i].timer);
+					clearInterval(downBall[i].timer2);
+					downBall[i].timer = null;
+					downBall[i].timer2 = null;
+				}
+				for(var i = 0; i < downBall.length; i++) {
+					downBall[i].style.height = downBall[i].style.width = firstSize; //给小球设置宽高
+					downBall[i].style.marginLeft = -(downBall[i].offsetWidth) / 2 + "px"; //给小球平衡定位
+					downBall[i].style.top = "50px"; //小球高度还原
+					startMove2(downBall[i], "top", targetSize);
+					startMove1(downBall[i], {
+						width: targetWidth,
+						height: targetWidth
+					});
+
+				}
+			}
+		} else {
+			return;
+		}
+	},1000);
+
+	function downBallAct() {
+
+		for(var i = 0; i < downBall.length; i++) {
+			downBall[i].style.height = downBall[i].style.width = firstSize; //给小球设置宽高
+			downBall[i].style.marginLeft = -(downBall[i].offsetWidth) / 2 + "px"; //给小球平衡定位
+			startMove2(downBall[i], "top", targetSize);
+			startMove1(downBall[i], {
+				width: targetWidth,
+				height: targetWidth
+			});
+		}
+		
+	}
+
+	function startMove1(obj, json, fnEnd) {
+		obj.timer = setInterval(function() {
+			for(var attr in json) {
+				var bStop = true;
+				var cur = 0; //用来记录元素当前的属性
+
+				if(attr == 'opacity') {
+					cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+				} else {
+					cur = parseInt(getStyle(obj, attr));
+				}
+
+				var speed = (json[attr] - cur) / 18;
+				speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+
+				if(cur != json[attr]) bStop = false;
+
+				if(speed <= 1 && speed >= -1) {
+					speed = 0;
+					bStop = true;
+				}
+
+				if(attr == 'opacity') {
+					obj.style.filter = 'alpha(opacity:' + (cur + speed) + ')';
+					obj.style.opacity = (cur + speed) / 100;
+				} else {
+					obj.style[attr] = cur + speed + 'px';
+					obj.style.marginLeft = -(obj.offsetWidth) / 2 + "px"; //给小球平衡定位
+				}
+			}
+			if(bStop) {
+				clearInterval(obj.timer);
+				move1 = false;
+				if(move2 == false) {
+					backInterval = null;
+				}
+				if(fnEnd) fnEnd();
+			}
+		}, 30);
+	}
+
+	function startMove2(obj, name, itarge, fnEnd) {
+		obj.timer2 = setInterval(function() {
+			speed += (itarge - (parseFloat(getStyle(obj, name)))) / 27;
+			speed *= 0.95;
+			if(Math.abs(speed) <= 2 && Math.abs(itarge - (parseFloat(getStyle(obj, name)))) <= 2) {
+				clearInterval(obj.timer2);
+				speed = 0;
+				obj.style[name] = itarge;
+				move2 = false;
+				if(move1 == false) {
+						backInterval = null;
+					}
+				if(fnEnd) {
+					fnEnd();
+				}
+			} else {
+				var H = (parseFloat(getStyle(obj, name))) + speed
+				if(H < 0) {
+					H = 0;
+				}
+				obj.style[name] = H + "px";
+			}
+		}, 30)
+	}
+
+	function getStyle(obj, name, value) {
+		if(arguments.length == 2) {
+			if(obj.currentStyle) {
+				return obj.currentStyle[name];
+			} else {
+				return getComputedStyle(obj, false)[name];
+			}
+		} else if(arguments.length == 3) {
+			obj.style[name] = value;
 		}
 	}
 }
