@@ -21,9 +21,21 @@ header{
 }
 .index_Title h1 {
 	text-indent:50px ;
+	text-shadow: 2px 2px 4px #ccc;
 	font-size: 44px;
 	font-weight: bold;
 }
+/*
+ * sideBall
+ */
+.sideBall{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	background: #fff;
+}
+
+
 /**
  * aside
  */
@@ -86,7 +98,7 @@ header{
 }
 .demo_Div{
 	position: absolute;
-	width: 1472px;
+	width: 1872px;
 }
 .demoBox .demo{
 	float: left;
