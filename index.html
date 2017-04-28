@@ -6,6 +6,11 @@
 		<title>服务器首页</title>
 		<link rel="stylesheet" type="text/css" href="css/theAll.css" />
 		<link rel="stylesheet" type="text/css" href="index.css" />
+		<style>
+			[v-cloak]{
+				display: none;
+			}
+		</style>
 		<script src="ajax.js"></script>
 		<script src="myJs/vue.js"></script>
 		<script src="myJs/vue-resource.js"></script>
@@ -40,13 +45,13 @@
 				</div>
 
 				<ul>
-					<li v-for="value in aside_test_show">
+					<li v-for="value in aside_test_show" v-cloak>
 						<a :href="value.url">{{value.name}}</a>
 					</li>
 				</ul>
 
 				<ul id="aside_test_none" class="aside_test_none" v-show="aside_test_canShow" @mouseover="aside_test_changeShow1()" @mouseout="aside_test_changeShow2()">
-					<li v-for="value in aside_test_none">
+					<li v-for="value in aside_test_none" v-cloak>
 						<a :href="value.url">{{value.name}}</a>
 					</li>
 				</ul>

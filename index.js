@@ -175,7 +175,7 @@ function sideBall() {
 	var move2 = true;
 	var downBall = document.getElementsByClassName("downBall");
 	var firstSize = sideWidth * 0.1 + "px";
-	var targetSize = document.getElementsByTagName("body")[0].offsetHeight * 0.8;
+	var targetSize = document.getElementsByTagName("body")[0].offsetHeight * 0.95-sideWidth*0.6;
 	var targetWidth = sideWidth * 0.6;
 	var backInterval = null;
 	for(var i = 0; i < side.length; i++) {
@@ -190,15 +190,12 @@ function sideBall() {
 	downBallAct();
 	
 	setInterval(function(){
-		console.log("1");
 		if(move1 == false && move2 == false) {
-			console.log("2");
 			if(backInterval == null) {
 				backInterval = setTimeout(setTimeOut, 2000);
 			}
 
 			function setTimeOut() {
-				console.log(move1, move2);
 				move1 = true;
 				move2 = true;
 				for(var i = 0; i < downBall.length; i++) {
