@@ -133,7 +133,7 @@ header{
 .endTest{
 	height: 500px;
 	margin-top: 20px;
-	background: url(images/test-bg.png);
+	background: url(images/test-bg.jpg);
     background-size:100% 500px ;
 }
 .endTest a{
