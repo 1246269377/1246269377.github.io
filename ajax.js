@@ -34,6 +34,7 @@ function json2url(json){
 }
 
 function ajax(json){
+	alert("1");
     json=json || {};
     if(!json.url)return;
     json.data=json.data || {};
